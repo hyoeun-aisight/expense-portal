@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Purchase Request · Expense Portal</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">Expense Portal</div>
+    <nav>
+      <a class="nav-link" href="index.html">Dashboard</a>
+      <a class="nav-link" href="reimbursement.html">Reimbursement</a>
+      <a class="nav-link active" href="purchase.html">Purchase Request</a>
+      <a class="nav-link" href="my-requests.html">My Requests</a>
+      <a class="nav-link" href="approvals.html">Approvals</a>
+      <a class="nav-link" href="admin.html">Admin</a>
+    </nav>
+    <div class="sidebar-foot">V1 Demo · Local Storage</div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><p class="eyebrow">Procurement</p><h1>Purchase Request</h1></div></header>
+    <section class="panel form-panel">
+      <form id="purchaseForm" class="form-grid">
+        <label>Requester<input name="requester" required /></label>
+        <label>Department<input name="department" required /></label>
+        <label>Item name<input name="itemName" required /></label>
+        <label>Category<select name="category" required><option value="">Select</option><option>Office Supplies</option><option>Hardware</option><option>IT Device</option><option>Food & Beverage</option><option>Subscription</option><option>Other</option></select></label>
+        <label>Quantity<input type="number" name="quantity" min="1" value="1" required /></label>
+        <label>Estimated total (KRW)<input id="purchaseAmount" type="number" name="amount" min="0" required /></label>
+        <label>Vendor<input name="vendor" /></label>
+        <label>Purchase link<input type="url" name="purchaseLink" placeholder="https://" /></label>
+        <label class="full">Business purpose<textarea name="purpose" rows="4" required></textarea></label>
+        <div class="full approval-preview" id="approvalPreview"></div>
+        <div class="full form-actions"><button class="btn primary" type="submit">Submit purchase request</button></div>
+      </form>
+    </section>
+  </main>
+</div>
+<script src="js/common.js"></script>
+<script src="js/purchase.js"></script>
+</body>
+</html>

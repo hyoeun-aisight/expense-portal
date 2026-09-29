@@ -1,0 +1,3 @@
+const tbody=document.getElementById('requestRows');const typeF=document.getElementById('typeFilter');const statusF=document.getElementById('statusFilter');
+function render(){let rows=loadRequests();if(typeF.value!=='all')rows=rows.filter(r=>r.type===typeF.value);if(statusF.value!=='all')rows=rows.filter(r=>r.status===statusF.value);tbody.innerHTML=rows.map(r=>`<tr><td>${r.id}</td><td>${r.type}</td><td>${titleOf(r)}</td><td>${money(r.amount)}</td><td>${badge(r.status)}</td><td>${r.route.join(' → ')}</td><td>${new Date(r.createdAt).toLocaleDateString('ko-KR')}</td></tr>`).join('')||'<tr><td colspan="7" class="muted">No matching requests.</td></tr>'}
+typeF.addEventListener('change',render);statusF.addEventListener('change',render);render();

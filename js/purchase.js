@@ -1,0 +1,4 @@
+const form=document.getElementById('purchaseForm');const amount=document.getElementById('purchaseAmount');const preview=document.getElementById('approvalPreview');
+function renderRoute(){const v=Number(amount.value||0);const route=getRoute(v,'Purchase');preview.innerHTML=`<strong>Approval route</strong><div class="route">${route.map((x,i)=>`<span class="route-step">${i+1}. ${x}</span>`).join('<span>→</span>')}</div>`}
+amount.addEventListener('input',renderRoute);renderRoute();
+form.addEventListener('submit',e=>{e.preventDefault();const data=Object.fromEntries(new FormData(form).entries());createRequest({type:'Purchase',requester:data.requester,department:data.department,itemName:data.itemName,category:data.category,quantity:Number(data.quantity),amount:Number(data.amount),vendor:data.vendor||'',purchaseLink:data.purchaseLink||'',purpose:data.purpose});alert('Purchase request submitted.');location.href='my-requests.html';});

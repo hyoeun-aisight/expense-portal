@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Admin · Expense Portal</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+<div class="app-shell">
+<aside class="sidebar"><div class="brand">Expense Portal</div><nav><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="reimbursement.html">Reimbursement</a><a class="nav-link" href="purchase.html">Purchase Request</a><a class="nav-link" href="my-requests.html">My Requests</a><a class="nav-link" href="approvals.html">Approvals</a><a class="nav-link active" href="admin.html">Admin</a></nav><div class="sidebar-foot">V1 Demo · Local Storage</div></aside>
+<main class="main"><header class="topbar"><div><p class="eyebrow">Settings</p><h1>Admin</h1></div><button class="btn danger" id="resetDemo">Reset demo data</button></header>
+<section class="panel"><div class="panel-head"><div><p class="eyebrow">Approval rules</p><h2>Purchase Request</h2></div></div>
+<div class="rule-grid"><div class="rule-card"><strong>₩0 – ₩500,000</strong><span>1. Office Admin</span></div><div class="rule-card"><strong>₩500,001 – ₩2,000,000</strong><span>1. Office Admin</span><span>2. Finance Manager</span></div><div class="rule-card"><strong>₩2,000,001+</strong><span>1. Office Admin</span><span>2. Finance Manager</span><span>3. Director</span></div></div>
+<p class="note">V1에서는 규칙이 코드에 저장되어 있습니다. Supabase 연결 후 이 화면에서 직접 수정할 수 있도록 바꿀 수 있습니다.</p></section>
+<section class="panel"><div class="panel-head"><div><p class="eyebrow">Data</p><h2>All requests</h2></div><button class="btn" id="exportCsv">Export CSV</button></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Requester</th><th>Type</th><th>Title</th><th>Amount</th><th>Status</th></tr></thead><tbody id="adminRows"></tbody></table></div></section></main>
+</div>
+<script src="js/common.js"></script><script src="js/admin.js"></script>
+</body></html>

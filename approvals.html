@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Approvals · Expense Portal</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+<div class="app-shell">
+<aside class="sidebar"><div class="brand">Expense Portal</div><nav><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="reimbursement.html">Reimbursement</a><a class="nav-link" href="purchase.html">Purchase Request</a><a class="nav-link" href="my-requests.html">My Requests</a><a class="nav-link active" href="approvals.html">Approvals</a><a class="nav-link" href="admin.html">Admin</a></nav><div class="sidebar-foot">V1 Demo · Local Storage</div></aside>
+<main class="main"><header class="topbar"><div><p class="eyebrow">Management</p><h1>Approvals</h1></div></header>
+<section class="panel"><div class="role-switch"><span>Acting as:</span><select id="approverRole"><option value="Office Admin">Office Admin</option><option value="Finance Manager">Finance Manager</option><option value="Director">Director</option><option value="Accountant">Accountant</option></select></div><div id="approvalCards" class="card-list"></div></section></main>
+</div>
+<script src="js/common.js"></script><script src="js/approvals.js"></script>
+</body></html>
