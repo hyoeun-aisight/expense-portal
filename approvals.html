@@ -1,21 +1,58 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Approvals · Expense Portal</title><link rel="stylesheet" href="css/style.css"></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Approvals · Expense Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/v6.css">
+</head>
 <body>
 <div class="app-shell">
-<aside class="sidebar"><div class="brand">Expense Portal</div><nav><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="reimbursement.html">Reimbursement</a><a class="nav-link" href="purchase.html">Purchase Request</a><a class="nav-link" href="my-requests.html">My Requests</a><a class="nav-link active" href="approvals.html" data-role-link="approvals" hidden>Approvals</a><a class="nav-link" href="admin.html" data-role-link="admin" hidden>Admin</a></nav><div class="sidebar-foot">Supabase · Shared Data</div></aside>
-<main class="main"><header class="topbar"><div><p class="eyebrow">Management</p><h1>Approvals</h1></div></header>
-<section class="panel">
-  <div class="filters" id="approvalTabs">
-    <button class="btn" id="purchaseTab" type="button">Purchase Requests</button>
-    <button class="btn" id="reimbursementTab" type="button">Reimbursements</button>
-  </div>
-  <div id="approvalCards" class="card-list"><p class="muted">Loading...</p></div>
-</section></main>
+  <aside class="sidebar">
+    <div class="brand">Expense Portal</div>
+    <nav>
+      <a class="nav-link" href="index.html">Dashboard</a>
+      <a class="nav-link" href="reimbursement.html">Reimbursement</a>
+      <a class="nav-link" href="purchase.html">Purchase Request</a>
+      <a class="nav-link" href="my-requests.html">My Requests</a>
+      <a class="nav-link active" href="approvals.html" data-role-link="approvals" hidden>Approvals</a>
+      <a class="nav-link" href="admin.html" data-role-link="admin" hidden>Admin</a>
+    </nav>
+    <div class="sidebar-foot">Supabase · Shared Data</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><div><p class="eyebrow">Management</p><h1>Approvals</h1></div></header>
+
+    <section class="panel">
+      <div class="v6-tabs" id="approvalTabs">
+        <button class="v6-tab active" id="purchaseTab" type="button">Purchase Requests</button>
+        <button class="v6-tab" id="reimbursementTab" type="button">Reimbursements</button>
+      </div>
+
+      <div class="v6-filter-grid approvals-filter">
+        <label>Status
+          <select id="approvalStatusFilter"><option value="all">All statuses</option></select>
+        </label>
+        <label>From
+          <input id="approvalDateFrom" type="date">
+        </label>
+        <label>To
+          <input id="approvalDateTo" type="date">
+        </label>
+        <button class="btn" id="approvalClearFilters" type="button">Clear filters</button>
+      </div>
+
+      <div id="approvalCards" class="card-list"><p class="muted">Loading...</p></div>
+    </section>
+  </main>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/common.js"></script>
-<script src="js/approvals.js"></script>
-</body></html>
+<script src="js/approvals.js?v=6"></script>
+</body>
+</html>
