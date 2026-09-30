@@ -3,14 +3,10 @@
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My Requests · Expense Portal</title><link rel="stylesheet" href="css/style.css"></head>
 <body>
 <div class="app-shell">
-<aside class="sidebar"><div class="brand">Expense Portal</div><nav><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="reimbursement.html">Reimbursement</a><a class="nav-link" href="purchase.html">Purchase Request</a><a class="nav-link active" href="my-requests.html">My Requests</a><a class="nav-link" href="approvals.html" data-role-link="approvals" hidden>Approvals</a><a class="nav-link" href="admin.html" data-role-link="admin" hidden>Admin</a></nav><div class="sidebar-foot">V1 Demo · Local Storage</div></aside>
+<aside class="sidebar"><div class="brand">Expense Portal</div><nav><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="reimbursement.html">Reimbursement</a><a class="nav-link" href="purchase.html">Purchase Request</a><a class="nav-link active" href="my-requests.html">My Requests</a><a class="nav-link" href="approvals.html" data-role-link="approvals" hidden>Approvals</a><a class="nav-link" href="admin.html" data-role-link="admin" hidden>Admin</a></nav><div class="sidebar-foot">Supabase · Shared Data</div></aside>
 <main class="main"><header class="topbar"><div><p class="eyebrow">Tracking</p><h1>My Requests</h1></div></header>
-<section class="panel"><div class="filters"><select id="typeFilter"><option value="all">All types</option><option value="Reimbursement">Reimbursement</option><option value="Purchase">Purchase</option></select><select id="statusFilter"><option value="all">All statuses</option><option>Pending Approval</option><option>Approved</option><option>Rejected</option><option>Completed</option></select></div>
-<div class="table-wrap"><table><thead><tr><th>ID</th><th>Type</th><th>Title</th><th>Amount</th><th>Status</th><th>Approval route</th><th>Created</th></tr></thead><tbody id="requestRows"></tbody></table></div></section></main>
+<section class="panel"><div class="filters"><select id="typeFilter"><option value="all">All types</option><option value="Reimbursement">Reimbursement</option><option value="Purchase">Purchase</option></select><select id="statusFilter"><option value="all">All statuses</option><option value="pending_approval">Pending approval</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="submitted">Submitted</option><option value="under_review">Under review</option><option value="need_more_info">Need more info</option><option value="paid">Paid</option><option value="completed">Completed</option></select></div>
+<div class="table-wrap"><table><thead><tr><th>Type</th><th>Title</th><th>Amount</th><th>Status</th><th>Route</th><th>Created</th></tr></thead><tbody id="requestRows"><tr><td colspan="6" class="muted">Loading...</td></tr></tbody></table></div></section></main>
 </div>
-<script src="js/common.js"></script><script src="js/my-requests.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/auth.js"></script>
-  <script>requireAuth();</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/auth.js"></script><script src="js/common.js"></script><script src="js/my-requests.js"></script>
 </body></html>

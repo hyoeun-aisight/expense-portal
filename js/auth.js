@@ -82,7 +82,7 @@ async function ensureUserProfile(user) {
 
 function applyRoleNavigation(role) {
   document.querySelectorAll('[data-role-link="approvals"]').forEach((el) => {
-    el.hidden = !['admin', 'approver'].includes(role);
+    el.hidden = !['admin', 'approver', 'accountant'].includes(role);
   });
 
   document.querySelectorAll('[data-role-link="admin"]').forEach((el) => {
