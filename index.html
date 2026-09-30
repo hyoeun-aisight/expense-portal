@@ -4,74 +4,225 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Expense Portal</title>
+
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-  <div class="app-shell">
-    <aside class="sidebar">
-<aside class="sidebar">
-  <div class="brand-wrap">
-    <div class="brand">Expense Portal</div>
-<img src="logoAIsight.png" alt="Company Logo" class="company-logo" />  </div>
 
-  <nav>
-    ...
-  </nav>
-</aside>      <nav>
-        <a class="nav-link active" href="index.html">Dashboard</a>
-        <a class="nav-link" href="reimbursement.html">Reimbursement</a>
-        <a class="nav-link" href="purchase.html">Purchase Request</a>
-        <a class="nav-link" href="my-requests.html">My Requests</a>
-        <a class="nav-link" href="approvals.html" data-role-link="approvals" hidden>Approvals</a>
-        <a class="nav-link" href="admin.html" data-role-link="admin" hidden>Admin</a>
+<body>
+
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <div class="brand-wrap">
+        <div class="brand">Expense Portal</div>
+      </div>
+
+      <nav>
+        <a class="nav-link active" href="index.html">
+          Dashboard
+        </a>
+
+        <a class="nav-link" href="reimbursement.html">
+          Reimbursement
+        </a>
+
+        <a class="nav-link" href="purchase.html">
+          Purchase Request
+        </a>
+
+        <a class="nav-link" href="my-requests.html">
+          My Requests
+        </a>
+
+        <a
+          class="nav-link"
+          href="approvals.html"
+          data-role-link="approvals"
+          hidden
+        >
+          Approvals
+        </a>
+
+        <a
+          class="nav-link"
+          href="admin.html"
+          data-role-link="admin"
+          hidden
+        >
+          Admin
+        </a>
       </nav>
-      <div class="sidebar-foot">V1 Demo · Local Storage</div>
+
+      <div class="sidebar-foot">
+        Supabase · Shared Data
+      </div>
+
     </aside>
+
+
+    <!-- Main Content -->
     <main class="main">
+
+      <!-- Header -->
       <header class="topbar">
+
         <div>
-          <p class="eyebrow">Internal Operations</p>
-          <h1>Dashboard</h1>
+          <p class="eyebrow">
+            Internal Operations
+          </p>
+
+          <h1>
+            Dashboard
+          </h1>
         </div>
-        <div class="user-actions"><div class="user-chip" data-user-name>Signed in</div><button class="btn small" type="button" onclick="signOut()">Sign out</button></div>
+
+        <div class="user-actions">
+
+          <div
+            class="user-chip"
+            data-user-name
+          >
+            Signed in
+          </div>
+
+          <button
+            class="btn small"
+            type="button"
+            onclick="signOut()"
+          >
+            Sign out
+          </button>
+
+        </div>
+
       </header>
 
+
+      <!-- Quick Actions -->
       <section class="hero-card">
+
         <div>
-          <p class="eyebrow">Quick actions</p>
-          <h2>What would you like to submit?</h2>
-          <p class="muted">Create a reimbursement or purchase request, then track approval progress.</p>
+
+          <p class="eyebrow">
+            Quick actions
+          </p>
+
+          <h2>
+            What would you like to submit?
+          </h2>
+
+          <p class="muted">
+            Create a reimbursement or purchase request,
+            then track approval progress.
+          </p>
+
         </div>
+
+
         <div class="hero-actions">
-          <a class="btn primary" href="reimbursement.html">New reimbursement</a>
-          <a class="btn" href="purchase.html">New purchase request</a>
+
+          <a
+            class="btn primary"
+            href="reimbursement.html"
+          >
+            New reimbursement
+          </a>
+
+          <a
+            class="btn"
+            href="purchase.html"
+          >
+            New purchase request
+          </a>
+
         </div>
+
       </section>
 
-      <section class="stats-grid" id="statsGrid"></section>
 
+      <!-- Dashboard Stats -->
+      <section
+        class="stats-grid"
+        id="statsGrid"
+      >
+      </section>
+
+
+      <!-- Recent Requests -->
       <section class="panel">
+
         <div class="panel-head">
+
           <div>
-            <p class="eyebrow">Recent</p>
-            <h2>Requests</h2>
+
+            <p class="eyebrow">
+              Recent
+            </p>
+
+            <h2>
+              Requests
+            </h2>
+
           </div>
-          <a class="text-link" href="my-requests.html">View all</a>
+
+          <a
+            class="text-link"
+            href="my-requests.html"
+          >
+            View all
+          </a>
+
         </div>
+
+
         <div class="table-wrap">
+
           <table>
-            <thead><tr><th>ID</th><th>Type</th><th>Title</th><th>Amount</th><th>Status</th><th>Created</th></tr></thead>
-            <tbody id="recentRequests"></tbody>
+
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+
+            <tbody id="recentRequests">
+            </tbody>
+
           </table>
+
         </div>
+
       </section>
+
     </main>
+
   </div>
-  <script src="js/common.js"></script>
-  <script src="js/dashboard.js"></script>
+
+
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
+
+  <!-- Authentication -->
   <script src="js/auth.js"></script>
-  <script>requireAuth();</script>
+
+  <!-- Common -->
+  <script src="js/common.js"></script>
+
+  <!-- Dashboard -->
+  <script src="js/dashboard.js"></script>
+
+  <!-- Require login -->
+  <script>
+    requireAuth();
+  </script>
+
 </body>
 </html>
