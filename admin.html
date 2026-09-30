@@ -11,7 +11,8 @@
 <section class="panel"><div class="panel-head"><div><p class="eyebrow">Data</p><h2>All requests</h2></div><button class="btn" id="exportCsv">Export CSV</button></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Requester</th><th>Type</th><th>Title</th><th>Amount</th><th>Status</th></tr></thead><tbody id="adminRows"></tbody></table></div></section></main>
 </div>
 <script src="js/common.js"></script><script src="js/admin.js"></script>
-  <footer class="site-footer">
-  © 2026 Hyoeun Jeong · TDK AIsight Korea
-</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script>requireAuth();</script>
 </body></html>

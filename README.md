@@ -39,3 +39,14 @@ Connect Supabase for:
 - Row Level Security (RLS)
 
 `js/supabase-config.example.js` is included as a placeholder for the next phase.
+
+## V2 authentication
+This version adds Google sign-in through Supabase.
+
+Upload all files to the repository root. The new/changed files include:
+- `login.html`
+- `js/supabase.js`
+- `js/auth.js`
+- updated HTML pages with an authentication guard
+
+Important: this only verifies that a user is signed in. Role-based access (employee/admin/accountant) still needs RLS policies and user-role data before production use.

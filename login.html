@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in · Expense Portal</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-body">
+  <main class="login-shell">
+    <section class="login-card">
+      <p class="eyebrow">Internal Operations</p>
+      <h1>Expense Portal</h1>
+      <p class="muted login-copy">Reimbursement and purchase requests in one place.</p>
+
+      <button id="googleLoginBtn" class="btn primary google-login" type="button" onclick="signInWithGoogle()">
+        Continue with Google
+      </button>
+
+      <p id="loginError" class="login-error" aria-live="polite"></p>
+      <p class="login-note">Only authorized accounts will be able to access internal requests.</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script>redirectIfLoggedIn();</script>
+</body>
+</html>
