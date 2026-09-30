@@ -4,3 +4,9 @@
 @media(max-width:620px){.form-grid,.stats-grid,.rule-grid{grid-template-columns:1fr}.full{grid-column:auto}.topbar{align-items:flex-start;gap:10px}.hero-actions{width:100%}.hero-actions .btn{flex:1;text-align:center}}
 
 .login-body{min-height:100vh;display:grid;place-items:center;background:#f6f7f9;padding:24px}.login-shell{width:min(440px,100%)}.login-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px;box-shadow:0 16px 50px rgba(16,24,40,.08)}.login-card h1{margin:0;font-size:32px}.login-copy{margin:10px 0 28px}.google-login{width:100%;padding:13px 16px}.login-error{min-height:20px;margin:12px 0 0;color:var(--danger);font-size:13px}.login-note{margin:18px 0 0;color:var(--muted);font-size:12px;line-height:1.5}.user-actions{display:flex;align-items:center;gap:10px}.btn.small{padding:8px 11px;font-size:12px}
+
+.brand {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
