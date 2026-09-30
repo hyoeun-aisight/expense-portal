@@ -9,6 +9,18 @@ function renderRoute() {
   preview.innerHTML = `<strong>Approval route</strong><div class="route">${route.map((x, i) => `<span class="route-step">${i + 1}. ${x}</span>`).join('<span>→</span>')}</div>`;
 }
 
+function normalizeUrl(url) {
+  if (!url) return null;
+
+  const trimmed = url.trim();
+
+  if (!/^https?:\/\//i.test(trimmed)) {
+    return `https://${trimmed}`;
+  }
+
+  return trimmed;
+}
+
 async function initPurchasePage() {
   authContext = await requireAuth();
   if (!authContext) return;
@@ -47,7 +59,7 @@ form.addEventListener('submit', async (e) => {
       quantity: Number(data.quantity),
       amount: Number(data.amount),
       vendor: data.vendor || null,
-      purchase_link: data.purchaseLink || null,
+      purchase_link: normalizeUrl(data.purchaseLink),      
       business_purpose: data.purpose,
       status: 'pending_approval',
       current_step: 1
