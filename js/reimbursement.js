@@ -2,11 +2,24 @@ const reimbursementForm = document.getElementById('reimbursementForm');
 const categoryInput = document.getElementById('reimCategory');
 const vehicleFields = document.getElementById('vehicleFields');
 const attachmentInput = document.getElementById('reimAttachment');
+const businessPurposeGroup = document.getElementById('businessPurposeGroup');
+const businessPurposeInput = document.getElementById('businessPurpose');
+
 let reimbursementAuth = null;
 
 function updateVehicleFields() {
   const show = ['Fuel', 'Parking', 'Transportation', 'Business Travel'].includes(categoryInput.value);
   vehicleFields.classList.toggle('hidden', !show);
+}
+function updateBusinessPurpose() {
+  const show = categoryInput.value === 'Other';
+
+  businessPurposeGroup.classList.toggle('hidden', !show);
+  businessPurposeInput.required = show;
+
+  if (!show) {
+    businessPurposeInput.value = '';
+  }
 }
 
 function safeFileName(name) {
@@ -17,17 +30,26 @@ async function initReimbursementPage() {
   reimbursementAuth = await requireAuth();
   if (!reimbursementAuth) return;
 
-  reimbursementForm.elements.requester.value = reimbursementAuth.profile?.name || reimbursementAuth.user.user_metadata?.full_name || reimbursementAuth.user.email;
+  reimbursementForm.elements.requester.value = 
+    reimbursementAuth.profile?.name || 
+    reimbursementAuth.user.user_metadata?.full_name || 
+    reimbursementAuth.user.email;
+  
   reimbursementForm.elements.requester.readOnly = true;
 
   if (reimbursementAuth.profile?.department) {
-    reimbursementForm.elements.department.value = reimbursementAuth.profile.department;
+    reimbursementForm.elements.department.value = 
+      reimbursementAuth.profile.department;
   }
 
   updateVehicleFields();
+  updateBusinessPurpose();
 }
 
-categoryInput.addEventListener('change', updateVehicleFields);
+categoryInput.addEventListener('change', () => {
+  updateVehicleFields();
+  updateBusinessPurpose();
+});
 
 reimbursementForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -97,3 +119,4 @@ reimbursementForm.addEventListener('submit', async (event) => {
 });
 
 initReimbursementPage();
+
