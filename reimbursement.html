@@ -38,8 +38,15 @@
           <option>Other</option>
         </select></label>
         <label>Amount (KRW)<input type="number" name="amount" min="0" required placeholder="50000" /></label>
-        <label>Receipt / document<input id="reimAttachment" type="file" name="attachment" accept=".pdf,image/png,image/jpeg" /></label>
-        <label class="full">Business purpose<textarea name="purpose" rows="4" required placeholder="Describe why this expense was necessary"></textarea></label>
+<label id="businessPurposeGroup" class="full hidden">
+  Business purpose
+  <textarea
+    id="businessPurpose"
+    name="purpose"
+    rows="4"
+    placeholder="Describe why this expense was necessary"
+  ></textarea>
+</label>        <label class="full">Business purpose<textarea name="purpose" rows="4" required placeholder="Describe why this expense was necessary"></textarea></label>
         <div id="vehicleFields" class="full conditional hidden">
           <h3>Vehicle details</h3>
           <div class="form-grid compact">
