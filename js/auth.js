@@ -36,7 +36,35 @@ async function getCurrentUser() {
   return user || null;
 }
 
-async function requireAuth() {
+async function getUserProfile(user) {
+  if (!user?.email) return null;
+
+  const { data, error } = await window.supabaseClient
+    .from('users')
+    .select('id,email,name,role,department,active')
+    .ilike('email', user.email)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Could not load user profile:', error);
+    return null;
+  }
+
+  return data || null;
+}
+
+function applyRoleNavigation(role) {
+  // Restricted links stay hidden unless the signed-in user's role allows them.
+  document.querySelectorAll('[data-role-link="approvals"]').forEach((el) => {
+    el.hidden = !['admin', 'approver'].includes(role);
+  });
+
+  document.querySelectorAll('[data-role-link="admin"]').forEach((el) => {
+    el.hidden = role !== 'admin';
+  });
+}
+
+async function requireAuth(allowedRoles = null) {
   const { data: { session } } = await window.supabaseClient.auth.getSession();
 
   if (!session) {
@@ -45,7 +73,22 @@ async function requireAuth() {
   }
 
   const user = session.user;
-  const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email;
+  const profile = await getUserProfile(user);
+
+  // Users not yet registered in public.users are treated as employees for UI purposes.
+  // RLS remains the actual security boundary for protected Supabase data.
+  const role = profile?.role || 'employee';
+  const active = profile?.active !== false;
+
+  if (!active) {
+    await window.supabaseClient.auth.signOut();
+    window.location.replace(`${SITE_BASE}login.html?inactive=1`);
+    return null;
+  }
+
+  applyRoleNavigation(role);
+
+  const name = profile?.name || user.user_metadata?.full_name || user.user_metadata?.name || user.email;
 
   document.querySelectorAll('[data-user-name]').forEach((el) => {
     el.textContent = name;
@@ -53,8 +96,16 @@ async function requireAuth() {
   document.querySelectorAll('[data-user-email]').forEach((el) => {
     el.textContent = user.email || '';
   });
+  document.querySelectorAll('[data-user-role]').forEach((el) => {
+    el.textContent = role;
+  });
 
-  return user;
+  if (Array.isArray(allowedRoles) && !allowedRoles.includes(role)) {
+    window.location.replace(`${SITE_BASE}index.html?access=denied`);
+    return null;
+  }
+
+  return { user, profile, role };
 }
 
 async function redirectIfLoggedIn() {
@@ -67,5 +118,6 @@ async function redirectIfLoggedIn() {
 window.signInWithGoogle = signInWithGoogle;
 window.signOut = signOut;
 window.getCurrentUser = getCurrentUser;
+window.getUserProfile = getUserProfile;
 window.requireAuth = requireAuth;
 window.redirectIfLoggedIn = redirectIfLoggedIn;

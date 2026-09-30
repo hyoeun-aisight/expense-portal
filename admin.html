@@ -3,7 +3,7 @@
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Admin · Expense Portal</title><link rel="stylesheet" href="css/style.css"></head>
 <body>
 <div class="app-shell">
-<aside class="sidebar"><div class="brand">Expense Portal</div><nav><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="reimbursement.html">Reimbursement</a><a class="nav-link" href="purchase.html">Purchase Request</a><a class="nav-link" href="my-requests.html">My Requests</a><a class="nav-link" href="approvals.html">Approvals</a><a class="nav-link active" href="admin.html">Admin</a></nav><div class="sidebar-foot">V1 Demo · Local Storage</div></aside>
+<aside class="sidebar"><div class="brand">Expense Portal</div><nav><a class="nav-link" href="index.html">Dashboard</a><a class="nav-link" href="reimbursement.html">Reimbursement</a><a class="nav-link" href="purchase.html">Purchase Request</a><a class="nav-link" href="my-requests.html">My Requests</a><a class="nav-link" href="approvals.html" data-role-link="approvals" hidden>Approvals</a><a class="nav-link active" href="admin.html" data-role-link="admin" hidden>Admin</a></nav><div class="sidebar-foot">V1 Demo · Local Storage</div></aside>
 <main class="main"><header class="topbar"><div><p class="eyebrow">Settings</p><h1>Admin</h1></div><button class="btn danger" id="resetDemo">Reset demo data</button></header>
 <section class="panel"><div class="panel-head"><div><p class="eyebrow">Approval rules</p><h2>Purchase Request</h2></div></div>
 <div class="rule-grid"><div class="rule-card"><strong>₩0 – ₩500,000</strong><span>1. Office Admin</span></div><div class="rule-card"><strong>₩500,001 – ₩2,000,000</strong><span>1. Office Admin</span><span>2. Finance Manager</span></div><div class="rule-card"><strong>₩2,000,001+</strong><span>1. Office Admin</span><span>2. Finance Manager</span><span>3. Director</span></div></div>
@@ -14,5 +14,5 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
   <script src="js/auth.js"></script>
-  <script>requireAuth();</script>
+  <script>requireAuth(['admin']);</script>
 </body></html>

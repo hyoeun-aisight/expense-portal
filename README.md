@@ -50,3 +50,12 @@ Upload all files to the repository root. The new/changed files include:
 - updated HTML pages with an authentication guard
 
 Important: this only verifies that a user is signed in. Role-based access (employee/admin/accountant) still needs RLS policies and user-role data before production use.
+
+
+## V3 role-based navigation
+
+- `admin`: can see Approvals and Admin.
+- `approver`: can see Approvals, but not Admin.
+- `employee` or users without a role row: restricted navigation is hidden.
+- Direct access to `approvals.html` and `admin.html` is guarded by role checks.
+- Supabase RLS remains the real data-security layer; UI hiding is only for usability.
