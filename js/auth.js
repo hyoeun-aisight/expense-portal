@@ -14,8 +14,8 @@ async function signInWithGoogle() {
     provider: 'google',
     options: {
       redirectTo: `${SITE_BASE}index.html`,
-       queryParams: {
-      prompt: 'select_account'
+      queryParams: {
+        prompt: 'select_account'
       }
     }
   });
@@ -56,8 +56,31 @@ async function getUserProfile(user) {
   return data || null;
 }
 
+async function ensureUserProfile(user) {
+  let profile = await getUserProfile(user);
+  if (profile || !user?.email) return profile;
+
+  const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email;
+  const { data, error } = await window.supabaseClient
+    .from('users')
+    .insert({
+      email: user.email,
+      name: displayName,
+      role: 'employee',
+      active: true
+    })
+    .select('id,email,name,role,department,active')
+    .single();
+
+  if (error) {
+    console.error('Could not create user profile:', error);
+    return await getUserProfile(user);
+  }
+
+  return data;
+}
+
 function applyRoleNavigation(role) {
-  // Restricted links stay hidden unless the signed-in user's role allows them.
   document.querySelectorAll('[data-role-link="approvals"]').forEach((el) => {
     el.hidden = !['admin', 'approver'].includes(role);
   });
@@ -76,10 +99,7 @@ async function requireAuth(allowedRoles = null) {
   }
 
   const user = session.user;
-  const profile = await getUserProfile(user);
-
-  // Users not yet registered in public.users are treated as employees for UI purposes.
-  // RLS remains the actual security boundary for protected Supabase data.
+  const profile = await ensureUserProfile(user);
   const role = profile?.role || 'employee';
   const active = profile?.active !== false;
 
@@ -122,5 +142,6 @@ window.signInWithGoogle = signInWithGoogle;
 window.signOut = signOut;
 window.getCurrentUser = getCurrentUser;
 window.getUserProfile = getUserProfile;
+window.ensureUserProfile = ensureUserProfile;
 window.requireAuth = requireAuth;
 window.redirectIfLoggedIn = redirectIfLoggedIn;
