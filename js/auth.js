@@ -13,7 +13,10 @@ async function signInWithGoogle() {
   const { error } = await window.supabaseClient.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${SITE_BASE}index.html`
+      redirectTo: `${SITE_BASE}index.html`,
+       queryParams: {
+      prompt: 'select_account'
+      }
     }
   });
 
