@@ -62,7 +62,8 @@ form.addEventListener('submit', async (e) => {
       purchase_link: normalizeUrl(data.purchaseLink),      
       business_purpose: data.purpose,
       status: 'pending_approval',
-      current_step: 1
+      current_step: 1,
+      currency: data.currency,
     });
 
   if (error) {
