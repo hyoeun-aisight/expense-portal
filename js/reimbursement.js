@@ -5,6 +5,8 @@ const attachmentInput = document.getElementById('reimAttachment');
 
 const businessPurposeGroup = document.getElementById('businessPurposeGroup');
 const businessPurposeInput = document.getElementById('businessPurpose');
+const reimbursementAmountInput =
+  document.getElementById('reimbursementAmount');
 
 let reimbursementAuth = null;
 
