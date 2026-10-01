@@ -289,8 +289,29 @@ function renderReimbursements() {
         </div>
         ${r.business_purpose ? `<div class="v6-detail-block"><span>Business purpose</span><p>${escapeHtml(r.business_purpose)}</p></div>` : ''}
         ${vehicle}
-        ${r.accountant_comment ? `<div class="v6-callout ${r.status === 'rejected' ? 'danger' : r.status === 'need_more_info' ? 'warning' : ''}"><strong>${r.status === 'need_more_info' ? 'Additional information requested' : 'Accountant comment'}</strong><p>${escapeHtml(r.accountant_comment)}</p></div>` : ''}
-        <div class="approval-actions">${actions}</div>
+        ${r.review_comment ? `
+  <div class="v6-callout ${
+    r.status === 'rejected'
+      ? 'danger'
+      : r.status === 'need_more_info'
+        ? 'warning'
+        : ''
+  }">
+
+    <strong>
+      ${
+        r.status === 'need_more_info'
+          ? 'Additional information requested'
+          : r.status === 'rejected'
+            ? 'Reason for rejection'
+            : 'Reviewer comment'
+      }
+    </strong>
+
+    <p>${escapeHtml(r.review_comment)}</p>
+
+  </div>
+` : ''}
       </article>`;
   }).join('');
 }
@@ -315,19 +336,70 @@ async function reviewReimbursement(id, status) {
   const row = reimbursementRows.find(r => r.id === id);
   if (!row) return;
 
-  let comment = row.accountant_comment || null;
+  let comment = row.review_comment || null;
+
+  // Need more info / Reject는 사유 필수
   if (['need_more_info', 'rejected'].includes(status)) {
-    const entered = window.prompt(status === 'need_more_info' ? 'What additional information is needed?' : 'Reason for rejection:', comment || '');
+
+    const promptText =
+      status === 'need_more_info'
+        ? 'What additional information is needed?'
+        : 'Reason for rejection:';
+
+    const entered = window.prompt(
+      promptText,
+      comment || ''
+    );
+
+    // Cancel
     if (entered === null) return;
-    comment = entered.trim() || null;
+
+    const trimmed = entered.trim();
+
+    // 빈칸 방지
+    if (!trimmed) {
+      alert(
+        status === 'need_more_info'
+          ? 'Please enter what additional information is required.'
+          : 'Please enter a reason for rejection.'
+      );
+      return;
+    }
+
+    comment = trimmed;
+  }
+
+  // 정상 진행 상태로 넘어갈 때 이전 코멘트 제거
+  if (
+    ['under_review', 'approved', 'paid', 'completed'].includes(status)
+  ) {
+    comment = null;
   }
 
   const now = new Date().toISOString();
+
+  const updatePayload = {
+    status: status,
+    review_comment: comment,
+    reviewed_at: now,
+    updated_at: now
+  };
+
+  // 누가 검토했는지도 저장
+  if (authContext?.profile?.id) {
+    updatePayload.reviewed_by = authContext.profile.id;
+  }
+
   const { error } = await window.supabaseClient
     .from('reimbursements')
-    .update({ status, accountant_comment: comment, reviewed_at: now, updated_at: now })
+    .update(updatePayload)
     .eq('id', id);
-  if (error) return alert(`Could not update reimbursement: ${error.message}`);
+
+  if (error) {
+    alert(`Could not update reimbursement: ${error.message}`);
+    return;
+  }
+
   await loadReimbursements();
 }
 
