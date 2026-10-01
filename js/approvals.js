@@ -5,6 +5,8 @@ const statusFilter = document.getElementById('approvalStatusFilter');
 const dateFrom = document.getElementById('approvalDateFrom');
 const dateTo = document.getElementById('approvalDateTo');
 const clearFilters = document.getElementById('approvalClearFilters');
+const exportReimbursementsBtn =
+  document.getElementById('exportReimbursements');
 
 let authContext = null;
 let approvalRows = [];
@@ -118,7 +120,76 @@ function renderPurchaseApprovals() {
     cards.innerHTML = '<p class="muted">No matching purchase requests.</p>';
     return;
   }
+function exportReimbursementsCsv() {
+  const rows = reimbursementVisibleRows();
 
+  if (!rows.length) {
+    alert('No reimbursements to export.');
+    return;
+  }
+
+  const headers = [
+    'Requester',
+    'Department',
+    'Expense Date',
+    'Category',
+    'Amount',
+    'Currency',
+    'Status',
+    'Business Purpose',
+    'Departure',
+    'Destination',
+    'Distance',
+    'Parking / Toll',
+    'Review Comment',
+    'Created At'
+  ];
+
+  const csvRows = rows.map(r => [
+    r.requester_name || '',
+    r.department || '',
+    r.expense_date || '',
+    r.category || '',
+    r.amount || '',
+    r.currency || 'KRW',
+    prettyStatus(r.status),
+    r.business_purpose || '',
+    r.departure || '',
+    r.destination || '',
+    r.distance || '',
+    r.parking_toll || '',
+    r.review_comment || '',
+    r.created_at || ''
+  ]);
+
+  const escapeCsv = value => {
+    const text = String(value ?? '').replaceAll('"', '""');
+    return `"${text}"`;
+  };
+
+  const csv =
+    '\uFEFF' +
+    [headers, ...csvRows]
+      .map(row => row.map(escapeCsv).join(','))
+      .join('\n');
+
+  const blob = new Blob([csv], {
+    type: 'text/csv;charset=utf-8;'
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+
+  a.href = url;
+  a.download =
+    `reimbursements_${new Date().toISOString().slice(0, 10)}.csv`;
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+}
   cards.innerHTML = visible.map(row => {
     const r = row.request;
     const active = row.status === 'pending' && r.status === 'pending_approval' && r.current_step === row.step_number;
