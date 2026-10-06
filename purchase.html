@@ -1,81 +1,435 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Purchase Request · Expense Portal</title>
-  <link rel="stylesheet" href="css/style.css" />
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/v6.css">
+
+  <style>
+    .purchase-items {
+      margin-top: 24px;
+    }
+
+    .purchase-items-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .purchase-items-header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .purchase-item-row {
+      display: grid;
+      grid-template-columns:
+        minmax(180px, 2fr)
+        minmax(150px, 1.3fr)
+        minmax(130px, 1fr)
+        90px
+        minmax(130px, 1fr)
+        52px;
+      gap: 12px;
+      align-items: end;
+
+      padding: 16px;
+      margin-bottom: 12px;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .purchase-item-row label {
+      margin: 0;
+    }
+
+    .purchase-item-row input,
+    .purchase-item-row select {
+      width: 100%;
+    }
+
+    .item-subtotal {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+
+      border: 1px solid #d9dee8;
+      border-radius: 14px;
+      background: #f8fafc;
+
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .remove-item-btn {
+      min-width: 44px;
+      height: 52px;
+      padding: 0;
+      border-radius: 14px;
+    }
+
+    .purchase-summary {
+      margin-top: 18px;
+      padding: 20px 22px;
+
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+      background: #f8fafc;
+    }
+
+    .purchase-total {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
+
+    .purchase-total strong {
+      font-size: 24px;
+    }
+
+    .approval-route-preview {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .route-step {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+
+      border: 1px solid #d9dee8;
+      border-radius: 999px;
+      background: #fff;
+
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .purchase-top-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 24px;
+    }
+
+    .purchase-common-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 18px 24px;
+      margin-top: 22px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 1000px) {
+      .purchase-item-row {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .remove-item-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .purchase-top-grid,
+      .purchase-common-grid,
+      .purchase-item-row {
+        grid-template-columns: 1fr;
+      }
+
+      .purchase-items-header,
+      .purchase-total {
+        align-items: stretch;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
+
 <body>
+
 <div class="app-shell">
+
   <aside class="sidebar">
-    <div class="brand">Expense Portal</div>
+
+    <div class="brand">
+      Expense Portal
+    </div>
+
     <nav>
-      <a class="nav-link" href="index.html">Dashboard</a>
-      <a class="nav-link" href="reimbursement.html">Reimbursement</a>
-      <a class="nav-link active" href="purchase.html">Purchase Request</a>
-      <a class="nav-link" href="my-requests.html">My Requests</a>
-      <a class="nav-link" href="approvals.html" data-role-link="approvals" hidden>Approvals</a>
-      <a class="nav-link" href="admin.html" data-role-link="admin" hidden>Admin</a>
+
+      <a
+        class="nav-link"
+        href="index.html"
+      >
+        Dashboard
+      </a>
+
+      <a
+        class="nav-link"
+        href="reimbursement.html"
+      >
+        Reimbursement
+      </a>
+
+      <a
+        class="nav-link active"
+        href="purchase.html"
+      >
+        Purchase Request
+      </a>
+
+      <a
+        class="nav-link"
+        href="my-requests.html"
+      >
+        My Requests
+      </a>
+
+      <a
+        class="nav-link"
+        href="approvals.html"
+        data-role-link="approvals"
+        hidden
+      >
+        Approvals
+      </a>
+
+      <a
+        class="nav-link"
+        href="admin.html"
+        data-role-link="admin"
+        hidden
+      >
+        Admin
+      </a>
+
     </nav>
-    <div class="sidebar-foot">Supabase · Shared Data</div>
+
+    <div class="sidebar-foot">
+      Supabase · Shared Data
+    </div>
+
   </aside>
+
+
   <main class="main">
-    <header class="topbar"><div><p class="eyebrow">Procurement</p><h1>Purchase Request</h1></div></header>
-    <section class="panel form-panel">
-      <form id="purchaseForm" class="form-grid">
-        <label>Requester<input name="requester" required /></label>
-        <label>Department<input name="department" required /></label>
-        <label>Item name<input name="itemName" required /></label>
-        <label>Category<select name="category" required><option value="">Select</option><option>Office Supplies</option><option>Hardware</option><option>IT Device</option><option>Food & Beverage</option><option>Subscription</option><option>Other</option></select></label>
-        <label>Quantity<input type="number" name="quantity" min="1" value="1" required /></label>
-      
-<label>Purchase link<input
-  type="text"
-  name="purchaseLink"
-  placeholder="https://example.com"
-  />
-</label>
 
-        <div class="full">
-  <div class="form-grid compact">
+    <header class="topbar">
 
-    <label>
-      Estimated total
-      <input
-        id="purchaseAmount"
-        type="number"
-        name="amount"
-        min="0"
-        step="0.01"
-        required
-      />
-    </label>
+      <div>
+        <p class="eyebrow">
+          Request
+        </p>
 
-    <label>
-      Currency
-      <select name="currency" required>
-        <option value="KRW">KRW</option>
-        <option value="USD">USD</option>
-        <option value="JPY">JPY</option>
-      </select>
-    </label>
+        <h1>
+          Purchase Request
+        </h1>
+      </div>
 
-  </div>
-</div>
+    </header>
 
-        
-        <label class="full">Business purpose<textarea name="purpose" rows="4" required></textarea></label>
-        <div class="full approval-preview" id="approvalPreview"></div>
-        <div class="full form-actions"><button class="btn primary" type="submit">Submit purchase request</button></div>
+
+    <section class="panel">
+
+      <form id="purchaseForm">
+
+        <!-- Requester / Department -->
+        <div class="purchase-top-grid">
+
+          <label>
+            Requester
+
+            <input
+              name="requester"
+              type="text"
+              readonly
+            >
+          </label>
+
+
+          <label>
+            Department
+
+            <input
+              name="department"
+              type="text"
+              placeholder="e.g. Hardware"
+            >
+          </label>
+
+        </div>
+
+
+        <!-- Multi item section -->
+        <div class="purchase-items">
+
+          <div class="purchase-items-header">
+
+            <div>
+              <h2>
+                Items
+              </h2>
+
+              <p class="muted">
+                Add all items included in this purchase request.
+              </p>
+            </div>
+
+            <button
+              class="btn"
+              id="addItemButton"
+              type="button"
+            >
+              + Add item
+            </button>
+
+          </div>
+
+
+          <div id="purchaseItems"></div>
+
+        </div>
+
+
+        <!-- Currency / Vendor -->
+        <div class="purchase-common-grid">
+
+          <label>
+            Currency
+
+            <select
+              id="purchaseCurrency"
+              name="currency"
+              required
+            >
+              <option value="KRW">
+                KRW
+              </option>
+
+              <option value="USD">
+                USD
+              </option>
+
+              <option value="JPY">
+                JPY
+              </option>
+            </select>
+          </label>
+
+
+          <label>
+            Vendor
+
+            <input
+              name="vendor"
+              type="text"
+              placeholder="Vendor / Supplier"
+            >
+          </label>
+
+
+          <label class="full-width">
+            Purchase link
+
+            <input
+              name="purchaseLink"
+              type="text"
+              placeholder="https://example.com"
+            >
+          </label>
+
+
+          <label class="full-width">
+            Business purpose
+
+            <textarea
+              name="purpose"
+              rows="4"
+              required
+              placeholder="Describe why this purchase is required"
+            ></textarea>
+          </label>
+
+        </div>
+
+
+        <!-- Total / approval route -->
+        <div class="purchase-summary">
+
+          <div class="purchase-total">
+
+            <span>
+              Estimated total
+            </span>
+
+            <strong id="purchaseTotal">
+              0 KRW
+            </strong>
+
+          </div>
+
+
+          <div>
+            <strong>
+              Approval route
+            </strong>
+
+            <div
+              id="approvalRoutePreview"
+              class="approval-route-preview"
+            ></div>
+          </div>
+
+        </div>
+
+
+        <div
+          style="margin-top: 24px;"
+        >
+
+          <button
+            class="btn primary"
+            type="submit"
+          >
+            Submit purchase request
+          </button>
+
+        </div>
+
       </form>
+
     </section>
+
   </main>
+
 </div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/common.js"></script>
-<script src="js/purchase.js?v=3"></script>
+<script src="js/purchase.js?v=8"></script>
+
 </body>
 </html>
